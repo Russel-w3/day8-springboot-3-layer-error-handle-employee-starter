@@ -63,20 +63,18 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.length()").value(1));
     }
 
-//    @Test
-//    void should_return_company_when_get_id_found() throws Exception {
-//        Company spring = new Company();
-//        spring.setName("Spring");
-//        Company company = companyController.createCompany(spring);
-//
-//        MockHttpServletRequestBuilder request = get("/companies/" + company.getId())
-//                .contentType(MediaType.APPLICATION_JSON);
-//        mockMvc.perform(request)
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(company.getId()))
-//                .andExpect(jsonPath("$.name").value(company.getName()));
-//    }
-//
+    @Test
+    void should_return_company_when_get_id_found() throws Exception {
+        createSpring();
+
+        MockHttpServletRequestBuilder request = get("/companies/" + 1)
+                .contentType(MediaType.APPLICATION_JSON);
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("spring"));
+    }
+
 //    @Test
 //    void should_return_company_when_put_with_id_found() throws Exception {
 //        Company spring = new Company();
