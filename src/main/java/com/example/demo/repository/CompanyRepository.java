@@ -28,7 +28,7 @@ public class CompanyRepository {
     }
 
     public Company createCompany(Company company) {
-        company.setId(companies.size());
+        company.setId(companies.size() + 1);
         companies.add(company);
         return company;
     }
