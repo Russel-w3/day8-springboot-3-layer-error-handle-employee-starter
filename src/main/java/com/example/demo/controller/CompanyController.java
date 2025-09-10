@@ -13,9 +13,6 @@ import java.util.List;
 public class CompanyController {
     private final List<Company> companies = new ArrayList<>();
 
-    public void empty() {
-        companies.clear();
-    }
 
     @GetMapping
     public List<Company> getCompanies(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
