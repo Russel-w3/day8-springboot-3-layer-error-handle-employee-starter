@@ -24,6 +24,18 @@ public class EmployeeControllerTest {
 //        employeeController.empty();
     }
 
+    private void createJohnSmith() throws Exception {
+        Gson gson = new Gson();
+        String john = gson.toJson(new Employee(21, "MALE", null, "John Smith", 6000.0));
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(john));
+    }
+
+    private void createJaneDoe() throws Exception {
+        Gson gson = new Gson();
+        String jane = gson.toJson(new Employee(22, "FEMALE", null, "Jane Doe", 6000.0));
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(jane));
+    }
+
     @Test
     void should_return_404_when_employee_not_found() throws Exception {
         mockMvc.perform(get("/employees/999")
@@ -33,14 +45,9 @@ public class EmployeeControllerTest {
 
     @Test
     void should_return_all_employee() throws Exception {
-        Gson gson = new Gson();
-        String jane = gson.toJson(new Employee(22, "FEMALE", null, "Jane Doe", 6000.0));
-        String john = gson.toJson(new Employee(21, "MALE", null, "John Smith", 6000.0));
+        createJohnSmith();
+        createJaneDoe();
 
-        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(jane));
-        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(john));
-
-        //
         mockMvc.perform(get("/employees")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
