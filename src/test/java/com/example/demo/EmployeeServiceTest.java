@@ -16,6 +16,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -55,5 +57,13 @@ public class EmployeeServiceTest {
         when(employeeRepository.createEmployee(any(Employee.class))).thenReturn(employee);
         Employee employeeResult = employeeService.createEmployee(employee);
         assertEquals(true, employeeResult.getStatus());
+    }
+
+    @Test
+    void should_throw_exception_when_update_an_no_active_employee() {
+        Employee deletedEmployee = new Employee(18, "MALE", 1, "Tom", 18000.0);
+        deletedEmployee.setStatus(false);
+        when(employeeRepository.getEmployeeById(anyInt())).thenReturn(deletedEmployee);
+        assertThrows(InvalidStatusEmployeeException.class,()->employeeService.updateEmployee(1,deletedEmployee));
     }
 }
