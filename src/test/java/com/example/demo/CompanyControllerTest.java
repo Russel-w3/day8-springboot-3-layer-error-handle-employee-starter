@@ -28,13 +28,13 @@ public class CompanyControllerTest {
 
     private void createSpring() throws Exception {
         Gson gson = new Gson();
-        String springCompany = gson.toJson(new Company(null,"spring"));
+        String springCompany = gson.toJson(new Company(null, "spring"));
         mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(springCompany));
     }
 
     private void createOracle() throws Exception {
         Gson gson = new Gson();
-        String springCompany = gson.toJson(new Company(null,"oracle"));
+        String springCompany = gson.toJson(new Company(null, "oracle"));
         mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(springCompany));
     }
 
