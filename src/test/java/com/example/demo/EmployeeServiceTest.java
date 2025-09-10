@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.InvalidAgeAndSalaryEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
+import com.example.demo.exception.InvalidStatusEmployeeException;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,4 @@ public class EmployeeServiceTest {
         Employee employeeResult = employeeService.createEmployee(employee);
         assertEquals(true, employeeResult.getStatus());
     }
-
-
 }

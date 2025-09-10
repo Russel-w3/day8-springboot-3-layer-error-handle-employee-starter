@@ -65,7 +65,7 @@ public class EmployeeRepository {
         if (found == null) {
             return null;
         }
-        employees.remove(found);
+        found.setStatus(false);
         return found;
     }
 
