@@ -71,17 +71,17 @@ public class EmployeeControllerTest {
 
     @Test
     void should_return_male_employee_when_employee_found() throws Exception {
-//        Employee expect = employeeController.createEmployee(johnSmith());
-//        employeeController.createEmployee(janeDoe());
-//
-//        mockMvc.perform(get("/employees?gender=male")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[0].id").value(expect.getId()))
-//                .andExpect(jsonPath("$[0].name").value(expect.getName()))
-//                .andExpect(jsonPath("$[0].age").value(expect.getAge()))
-//                .andExpect(jsonPath("$[0].gender").value(expect.getGender()))
-//                .andExpect(jsonPath("$[0].salary").value(expect.getSalary()));
+        createJohnSmith();
+        createJaneDoe();
+
+        mockMvc.perform(get("/employees?gender=male")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("John Smith"))
+                .andExpect(jsonPath("$[0].age").value(21))
+                .andExpect(jsonPath("$[0].gender").value("MALE"))
+                .andExpect(jsonPath("$[0].salary").value(6000.0));
     }
 
     @Test
