@@ -52,4 +52,7 @@ public class CompanyService {
         }
     }
 
+    public void deleteAll(){
+        companyRepository.deleteAll();
+    }
 }
