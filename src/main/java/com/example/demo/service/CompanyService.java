@@ -5,6 +5,7 @@ import com.example.demo.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,4 +44,12 @@ public class CompanyService {
         }
         return companyById;
     }
+
+    public void deleteCompany( int id) {
+        Company companyById = companyRepository.deleteCompany(id);
+        if (companyById == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
+        }
+    }
+
 }

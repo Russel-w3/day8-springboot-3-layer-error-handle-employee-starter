@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Company;
+import com.example.demo.entity.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,21 @@ public class CompanyRepository {
             if (c.getId().equals(id)) {
                 return c;
             }
+        }
+        return null;
+    }
+
+    public Company deleteCompany(int id) {
+        Company found = null;
+        for (Company c : companies) {
+            if (c.getId().equals(id)) {
+                found = c;
+                break;
+            }
+        }
+        if (found != null) {
+            companies.remove(found);
+            return found;
         }
         return null;
     }
