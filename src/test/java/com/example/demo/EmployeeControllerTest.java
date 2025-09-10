@@ -125,10 +125,10 @@ public class EmployeeControllerTest {
 
     @Test
     void should_status_204_when_delete_employee() throws Exception {
-//        int id = employeeController.createEmployee(johnSmith()).getId();
-//
-//        mockMvc.perform(delete("/employees/" + id))
-//                .andExpect(status().isNoContent());
+        createJohnSmith();
+
+        mockMvc.perform(delete("/employees/" + 1))
+                .andExpect(status().isNoContent());
     }
 
     @Test
