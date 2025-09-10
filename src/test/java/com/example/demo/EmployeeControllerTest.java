@@ -20,8 +20,8 @@ public class EmployeeControllerTest {
     private MockMvc mockMvc;
 
     @BeforeEach
-    void cleanEmployees() {
-//        employeeController.empty();
+    void cleanEmployees() throws Exception {
+        mockMvc.perform(delete("/employees/delete"));
     }
 
     private void createJohnSmith() throws Exception {
@@ -56,16 +56,17 @@ public class EmployeeControllerTest {
 
     @Test
     void should_return_employee_when_employee_found() throws Exception {
-//        Employee expect = employeeController.createEmployee(johnSmith());
-//
-//        mockMvc.perform(get("/employees/1")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(expect.getId()))
-//                .andExpect(jsonPath("$.name").value(expect.getName()))
-//                .andExpect(jsonPath("$.age").value(expect.getAge()))
-//                .andExpect(jsonPath("$.gender").value(expect.getGender()))
-//                .andExpect(jsonPath("$.salary").value(expect.getSalary()));
+        createJohnSmith();
+        createJaneDoe();
+
+        mockMvc.perform(get("/employees/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("John Smith"))
+                .andExpect(jsonPath("$.age").value(21))
+                .andExpect(jsonPath("$.gender").value("MALE"))
+                .andExpect(jsonPath("$.salary").value(6000.0));
     }
 
     @Test
