@@ -86,24 +86,17 @@ public class EmployeeControllerTest {
 
     @Test
     void should_create_employee() throws Exception {
-//        String requestBody = """
-//                        {
-//                            "name": "John Smith",
-//                            "age": 28,
-//                            "gender": "MALE",
-//                            "salary": 60000
-//                        }
-//                """;
-//
-//        mockMvc.perform(post("/employees")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.id").isNumber())
-//                .andExpect(jsonPath("$.name").value("John Smith"))
-//                .andExpect(jsonPath("$.age").value(28))
-//                .andExpect(jsonPath("$.gender").value("MALE"))
-//                .andExpect(jsonPath("$.salary").value(60000));
+        Gson gson = new Gson();
+        String john = gson.toJson(new Employee(21, "MALE", null, "John Smith", 6000.0));
+        mockMvc.perform(post("/employees")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(john))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("John Smith"))
+                .andExpect(jsonPath("$.age").value(21))
+                .andExpect(jsonPath("$.gender").value("MALE"))
+                .andExpect(jsonPath("$.salary").value(6000.0));
     }
 
     @Test
