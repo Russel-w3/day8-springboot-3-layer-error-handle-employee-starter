@@ -77,4 +77,9 @@ public class CompanyController {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
     }
+
+    @DeleteMapping("/delete")
+    public void deleteAll(){
+        companies.clear();
+    }
 }
