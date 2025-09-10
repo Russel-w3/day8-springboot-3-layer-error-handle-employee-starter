@@ -14,6 +14,7 @@ public class EmployeeRepository {
 
     public List<Employee> getEmployees(String gender, Integer page, Integer size) {
         Stream<Employee> stream = employees.stream();
+        stream = stream.filter(employee -> Boolean.TRUE.equals(employee.getStatus()));
         if (gender != null) {
             stream = stream.filter(employee -> employee.getGender().compareToIgnoreCase(gender) == 0);
         }
@@ -54,7 +55,7 @@ public class EmployeeRepository {
         return found;
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         employees.clear();
     }
 }

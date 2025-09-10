@@ -56,6 +56,20 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    void should_return_active_employee_list_when_has_unactivated_employee() throws Exception {
+        createJohnSmith();
+        createJaneDoe();
+        mockMvc.perform(delete("/employees/1"))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/employees")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1));
+
+    }
+
+    @Test
     void should_return_employee_when_employee_found() throws Exception {
         createJohnSmith();
         createJaneDoe();
