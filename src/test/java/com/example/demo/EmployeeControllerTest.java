@@ -148,7 +148,8 @@ public class EmployeeControllerTest {
 
         mockMvc.perform(get("/employees/1")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(false));
     }
 
     @Test
@@ -222,5 +223,25 @@ public class EmployeeControllerTest {
         String john = gson.toJson(new Employee(30, "MALE", null, "John Smith", 8000.0));
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(john))
                 .andExpect(jsonPath("$.message").value("employee age greater than or equal 30 and salary less than 20000!"));
+    }
+
+    @Test
+    void should_throw_exception_when_update_an_unactivated_employee() throws Exception {
+        createJohnSmith();
+        mockMvc.perform(delete("/employees/" + 1))
+                .andExpect(status().isNoContent());
+        String requestBody = """
+                        {
+                            "name": "John Smith",
+                            "age": 29,
+                            "gender": "MALE",
+                            "salary": 65000.0
+                        }
+                """;
+
+        mockMvc.perform(put("/employees/" + 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(jsonPath("$.message").value("employee has left the company!"));
     }
 }

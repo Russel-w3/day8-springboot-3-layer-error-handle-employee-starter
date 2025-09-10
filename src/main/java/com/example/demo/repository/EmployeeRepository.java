@@ -26,7 +26,7 @@ public class EmployeeRepository {
 
     public Employee getEmployeeById(int id) {
         return employees.stream()
-                .filter(employee -> employee.getId() == id && employee.getStatus() == Boolean.TRUE)
+                .filter(employee -> employee.getId() == id)
                 .findFirst()
                 .orElse(null);
     }

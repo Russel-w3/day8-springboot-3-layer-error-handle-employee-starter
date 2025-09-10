@@ -29,4 +29,10 @@ public class GlobalExceptionHandler {
     public ResponseException InvalidAgeAndSalaryEmployeeExceptionHandler(Exception exception) {
         return new ResponseException(exception.getMessage());
     }
+
+    @ExceptionHandler(value = InvalidStatusEmployeeException.class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public ResponseException InvalidStatusEmployeeExceptionHandler(Exception exception) {
+        return new ResponseException(exception.getMessage());
+    }
 }
