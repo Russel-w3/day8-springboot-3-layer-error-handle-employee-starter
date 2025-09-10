@@ -10,15 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
@@ -64,6 +61,19 @@ public class EmployeeServiceTest {
         Employee deletedEmployee = new Employee(18, "MALE", 1, "Tom", 18000.0);
         deletedEmployee.setStatus(false);
         when(employeeRepository.getEmployeeById(anyInt())).thenReturn(deletedEmployee);
-        assertThrows(InvalidStatusEmployeeException.class,()->employeeService.updateEmployee(1,deletedEmployee));
+        assertThrows(InvalidStatusEmployeeException.class, () -> employeeService.updateEmployee(1, deletedEmployee));
     }
+
+    @Test
+    void should_return_active_false_when_delete_employee() {
+        Employee employee = new Employee(18, "MALE", 1, "Tom", 18000.0);
+        assertTrue(employee.getStatus());
+        when(employeeRepository.getEmployeeById(anyInt())).thenReturn(employee);
+
+        employeeService.deleteEmployee(1);
+
+        verify(employeeRepository)
+                .updateEmployee(eq(1), argThat(e -> !e.getStatus()));
+    }
+
 }

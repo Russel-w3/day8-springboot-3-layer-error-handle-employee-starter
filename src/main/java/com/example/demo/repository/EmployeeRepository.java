@@ -54,21 +54,6 @@ public class EmployeeRepository {
         return found;
     }
 
-    public Employee deleteEmployee(int id) {
-        Employee found = null;
-        for (Employee e : employees) {
-            if (e.getId() == id) {
-                found = e;
-                break;
-            }
-        }
-        if (found == null) {
-            return null;
-        }
-        found.setStatus(false);
-        return found;
-    }
-
     public void deleteAll(){
         employees.clear();
     }
