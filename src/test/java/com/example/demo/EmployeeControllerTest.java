@@ -187,4 +187,24 @@ public class EmployeeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5));
     }
+
+    @Test
+    void should_return_page_with_active_employee_when_get_page() throws Exception {
+        createJohnSmith();
+        createJaneDoe();
+        createJaneDoe();
+        createJaneDoe();
+        createJaneDoe();
+        createJaneDoe();
+
+        mockMvc.perform(delete("/employees/" + 2))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/employees?page=1&size=5")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(5))
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[1].id").value(3));
+    }
 }
