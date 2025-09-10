@@ -75,26 +75,24 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.name").value("spring"));
     }
 
-//    @Test
-//    void should_return_company_when_put_with_id_found() throws Exception {
-//        Company spring = new Company();
-//        spring.setName("Spring");
-//        Company company = companyController.createCompany(spring);
-//        String requestBody = """
-//                {
-//                    "name": "Spring2"
-//                }
-//                """;
-//        MockHttpServletRequestBuilder request = put("/companies/" + company.getId())
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(requestBody);
-//
-//        mockMvc.perform(request)
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(company.getId()))
-//                .andExpect(jsonPath("$.name").value("Spring2"));
-//    }
-//
+    @Test
+    void should_return_company_when_put_with_id_found() throws Exception {
+        createSpring();
+        String requestBody = """
+                {
+                    "name": "spring2"
+                }
+                """;
+        MockHttpServletRequestBuilder request = put("/companies/" + 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("spring2"));
+    }
+
 //    @Test
 //    void should_return_no_content_when_delete_id_found() throws Exception {
 //        Company spring = new Company();
