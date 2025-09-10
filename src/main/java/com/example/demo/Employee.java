@@ -43,4 +43,12 @@ public class Employee {
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
+    public Employee(Integer age, String gender, Integer id, String name, Double salary) {
+        this.age = age;
+        this.gender = gender;
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
 }
