@@ -30,11 +30,11 @@ public class CompanyService {
     }
 
     public Company updateCompany(int id, Company updatedCompany) {
-        Company company = companyRepository.updateCompany(id, updatedCompany);
-        if (company == null) {
+        Company companyById = companyRepository.getCompanyById(id);
+        if (companyById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
         }
-        return company;
+        return companyRepository.updateCompany(id, updatedCompany);
     }
 
     public Company getCompanyById(int id) {
@@ -46,10 +46,11 @@ public class CompanyService {
     }
 
     public void deleteCompany( int id) {
-        Company companyById = companyRepository.deleteCompany(id);
+        Company companyById = companyRepository.getCompanyById(id);
         if (companyById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
         }
+        companyRepository.deleteCompany(id);
     }
 
     public void deleteAll(){

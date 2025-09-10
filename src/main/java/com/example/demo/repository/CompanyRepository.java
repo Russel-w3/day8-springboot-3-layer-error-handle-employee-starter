@@ -34,7 +34,6 @@ public class CompanyRepository {
     }
 
     public Company updateCompany(int id, Company updatedCompany) {
-        Company found = null;
         for (Company c : companies) {
             if (c.getId().equals(id)) {
                 c.setName(updatedCompany.getName());
@@ -53,7 +52,7 @@ public class CompanyRepository {
         return null;
     }
 
-    public Company deleteCompany(int id) {
+    public void deleteCompany(int id) {
         Company found = null;
         for (Company c : companies) {
             if (c.getId().equals(id)) {
@@ -63,9 +62,7 @@ public class CompanyRepository {
         }
         if (found != null) {
             companies.remove(found);
-            return found;
         }
-        return null;
     }
 
     public void deleteAll(){
