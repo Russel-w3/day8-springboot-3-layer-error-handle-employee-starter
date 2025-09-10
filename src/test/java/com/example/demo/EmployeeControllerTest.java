@@ -131,6 +131,11 @@ public class EmployeeControllerTest {
 
         mockMvc.perform(delete("/employees/" + 1))
                 .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/employees/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(false));
     }
 
     @Test
