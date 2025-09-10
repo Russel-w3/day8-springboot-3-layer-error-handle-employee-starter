@@ -48,5 +48,13 @@ public class EmployeeServiceTest {
         assertThrows(InvalidAgeAndSalaryEmployeeException.class, () -> employeeService.createEmployee(employee));
     }
 
+    @Test
+    void should_set_status_to_true_by_default_when_create_an_employee() {
+        Employee employee = new Employee(18, "MALE", null, "Tom", 18000.0);
+        when(employeeRepository.createEmployee(any(Employee.class))).thenReturn(employee);
+        Employee employeeResult = employeeService.createEmployee(employee);
+        assertEquals(true, employeeResult.getStatus());
+    }
+
 
 }
