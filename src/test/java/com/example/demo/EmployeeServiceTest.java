@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.entity.Employee;
+import com.example.demo.exception.InvalidAgeAndSalaryEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
@@ -34,10 +35,17 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_throw_exception_when_create_a_employee_of_greater_than_65_years_old_or_less_than_18(){
+    void should_throw_exception_when_create_a_employee_of_greater_than_65_years_old_or_less_than_18() {
         Employee employee = new Employee(66, "MALE", null, "Tom", 20000.0);
         when(employeeRepository.createEmployee(any(Employee.class))).thenReturn(employee);
         assertThrows(InvalidAgeEmployeeException.class, () -> employeeService.createEmployee(employee));
+    }
+
+    @Test
+    void should_throw_exception_when_create_an_employee_with_over_or_equals_30_with_salary_less_than_20000() {
+        Employee employee = new Employee(30, "MALE", null, "Tom", 18000.0);
+        when(employeeRepository.createEmployee(any(Employee.class))).thenReturn(employee);
+        assertThrows(InvalidAgeAndSalaryEmployeeException.class, () -> employeeService.createEmployee(employee));
     }
 
 
