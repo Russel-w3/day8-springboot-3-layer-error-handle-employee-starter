@@ -1,5 +1,6 @@
 package com.example.demo.controller.advice;
 
+import com.example.demo.exception.InvalidAgeAndSalaryEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
 import com.example.demo.exception.InvalidStatusEmployeeException;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = InvalidAgeEmployeeException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseException InvalidAgeEmployeeExceptionHandler(Exception exception) {
+        return new ResponseException(exception.getMessage());
+    }
+
+    @ExceptionHandler(value = InvalidAgeAndSalaryEmployeeException.class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public ResponseException InvalidAgeAndSalaryEmployeeExceptionHandler(Exception exception) {
         return new ResponseException(exception.getMessage());
     }
 }
