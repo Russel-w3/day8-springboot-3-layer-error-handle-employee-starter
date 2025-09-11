@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -31,15 +32,16 @@ public class CompanyService {
     public Company createCompany(Company company) {
         return companyRepository.save(company);
     }
-//
-//    public Company updateCompany(int id, Company updatedCompany) {
-//        Company companyById = companyRepository.getCompanyById(id);
-//        if (companyById == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
-//        }
-//        return companyRepository.updateCompany(id, updatedCompany);
-//    }
-//
+
+    public Company updateCompany(int id, Company updatedCompany) {
+        Optional<Company> companyById = companyRepository.findById(id);
+        if (companyById.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
+        }
+        updatedCompany.setId(id);
+        return companyRepository.save(updatedCompany);
+    }
+
 //    public Company getCompanyById(int id) {
 //        Company companyById = companyRepository.getCompanyById(id);
 //        if (companyById == null) {
