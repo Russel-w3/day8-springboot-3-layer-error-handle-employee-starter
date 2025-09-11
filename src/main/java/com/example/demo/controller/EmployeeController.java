@@ -1,9 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.EmployeeRequest;
 import com.example.demo.dto.EmployeeResponse;
+import com.example.demo.dto.mapper.EmployeeMapper;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +16,11 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final EmployeeMapper employeeMapper;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper) {
         this.employeeService = employeeService;
+        this.employeeMapper = employeeMapper;
     }
 
     @GetMapping
@@ -30,14 +35,16 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeResponse createEmployee(@RequestBody Employee employee) {
+    public EmployeeResponse createEmployee(@RequestBody @Validated EmployeeRequest requestEmployee) {
+        Employee employee = employeeMapper.toEntity(requestEmployee);
         return employeeService.createEmployee(employee);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeResponse updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
-        return employeeService.updateEmployee(id, updatedEmployee);
+    public EmployeeResponse updateEmployee(@PathVariable int id, @RequestBody @Validated EmployeeRequest updatedEmployee) {
+        Employee employee = employeeMapper.toEntity(updatedEmployee);
+        return employeeService.updateEmployee(id, employee);
     }
 
     @DeleteMapping("/{id}")

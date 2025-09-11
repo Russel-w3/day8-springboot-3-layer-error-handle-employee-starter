@@ -15,7 +15,7 @@ public class Employee {
     private Boolean status;
 
     public Employee() {
-
+        this.status = true;
     }
 
     @Column(name = "company_id")

@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.dto.EmployeeResponse;
+import com.example.demo.dto.mapper.EmployeeMapper;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.InvalidAgeAndSalaryEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
@@ -27,12 +28,16 @@ public class EmployeeServiceTest {
     private EmployeeService employeeService;
 
     @Mock
+    private EmployeeMapper employeeMapper;
+
+    @Mock
     private IEmployeeRepository employeeRepository;
 
     @Test
     void should_return_employee_when_create_an_employee() {
         Employee employee = new Employee(18, "MALE", null, "Tom", 6000.0);
-        when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
+        EmployeeResponse employeeResponse = new EmployeeResponse(18, "MALE", "Tom", null, true);
+        when(employeeMapper.toResponse(employeeRepository.save(any(Employee.class)))).thenReturn(employeeResponse);
         EmployeeResponse employeeResult = employeeService.createEmployee(employee);
         assertEquals(employeeResult.getAge(), employee.getAge());
     }
@@ -54,9 +59,13 @@ public class EmployeeServiceTest {
     @Test
     void should_set_status_to_true_by_default_when_create_an_employee() {
         Employee employee = new Employee(18, "MALE", null, "Tom", 18000.0);
-        when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
-        EmployeeResponse employeeResult = employeeService.createEmployee(employee);
-        assertEquals(true, employeeResult.getStatus());
+        employee.setStatus(null);
+
+       when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
+
+        employeeService.createEmployee(employee);
+        assertEquals(true, employee.getStatus());
+        verify(employeeMapper).toResponse(employee);
     }
 
     @Test

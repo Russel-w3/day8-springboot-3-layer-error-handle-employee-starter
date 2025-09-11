@@ -65,7 +65,8 @@ public class EmployeeService {
             throw new InvalidAgeAndSalaryEmployeeException("employee age greater than or equal 30 and salary less than 20000!");
         }
         employee.setStatus(true);
-        return employeeMapper.toResponse(employeeRepository.save(employee));
+        Employee save = employeeRepository.save(employee);
+        return employeeMapper.toResponse(save);
     }
 
     public EmployeeResponse updateEmployee(int id, Employee updatedEmployee) {
