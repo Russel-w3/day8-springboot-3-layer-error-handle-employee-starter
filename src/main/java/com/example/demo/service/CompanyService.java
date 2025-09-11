@@ -28,9 +28,9 @@ public class CompanyService {
         }
     }
 
-//    public Company createCompany(Company company) {
-//        return companyRepository.createCompany(company);
-//    }
+    public Company createCompany(Company company) {
+        return companyRepository.save(company);
+    }
 //
 //    public Company updateCompany(int id, Company updatedCompany) {
 //        Company companyById = companyRepository.getCompanyById(id);
