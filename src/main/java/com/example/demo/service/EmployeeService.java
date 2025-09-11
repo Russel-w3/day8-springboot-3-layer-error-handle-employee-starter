@@ -38,10 +38,10 @@ public class EmployeeService {
             }
         } else {
             if (page == null || size == null) {
-                return employeeMapper.toResponse(employeeRepository.findEmployeesByGender(gender));
+                return employeeMapper.toResponse(employeeRepository.findEmployeesByGenderOrderByAgeDesc(gender));
             } else {
                 Pageable pageable = PageRequest.of(page - 1, size);
-                return employeeMapper.toResponse(employeeRepository.findEmployeesByGender(gender, pageable));
+                return employeeMapper.toResponse(employeeRepository.findEmployeesByGenderOrderByAgeDesc(gender, pageable));
             }
         }
     }

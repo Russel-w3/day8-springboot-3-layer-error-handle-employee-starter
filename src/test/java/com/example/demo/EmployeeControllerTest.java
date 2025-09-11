@@ -68,7 +68,7 @@ public class EmployeeControllerTest {
                 .andExpect(status().isNoContent());
 
         mockMvc.perform(get("/employees")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
 
@@ -239,8 +239,27 @@ public class EmployeeControllerTest {
                 """;
 
         mockMvc.perform(put("/employees/" + 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
                 .andExpect(jsonPath("$.message").value("employee has left the company!"));
+    }
+
+    @Test
+    void should_return_employees_sorted_by_age_desc_when_query_by_gender() throws Exception {
+        createJohnSmith();
+        String requestBody = """
+                        {
+                            "name": "John Smith",
+                            "age": 29,
+                            "gender": "MALE",
+                            "salary": 65000.0
+                        }
+                """;
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(requestBody))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/employees?gender=male"))
+                .andExpect(jsonPath("$[0].id").value(2));
+
     }
 }
