@@ -60,7 +60,7 @@ public class CompanyRepository {
         }
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         companies.clear();
     }
 

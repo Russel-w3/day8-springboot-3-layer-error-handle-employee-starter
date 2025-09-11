@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseException handlerArgumentNotValid(MethodArgumentNotValidException exception){
+    public ResponseException handlerArgumentNotValid(MethodArgumentNotValidException exception) {
         String errorMessage = exception.getBindingResult().getFieldErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(" | "));

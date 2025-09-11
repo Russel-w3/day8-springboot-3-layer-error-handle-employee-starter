@@ -24,7 +24,7 @@ public class CompanyServiceTest {
 
     @Test
     void should_return_employee_when_create_an_employee() {
-        Company company = new Company(null,"oracle");
+        Company company = new Company(null, "oracle");
         when(companyRepository.save(any())).thenReturn(company);
         Company companyResult = companyService.createCompany(company);
         assertEquals(company.getName(), companyResult.getName());

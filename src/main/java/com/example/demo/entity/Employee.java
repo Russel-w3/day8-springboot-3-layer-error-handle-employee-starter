@@ -24,30 +24,39 @@ public class Employee {
     public Integer getId() {
         return id;
     }
+
     public String getName() {
         return name;
     }
+
     public Integer getAge() {
         return age;
     }
+
     public String getGender() {
         return gender;
     }
+
     public Double getSalary() {
         return salary;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public void setAge(int age) {
         this.age = age;
     }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
+
     public void setSalary(double salary) {
         this.salary = salary;
     }

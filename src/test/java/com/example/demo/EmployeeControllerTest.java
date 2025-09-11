@@ -39,7 +39,7 @@ public class EmployeeControllerTest {
 
     private void createJaneDoe() throws Exception {
         Gson gson = new Gson();
-        String jane = gson.toJson(new EmployeeRequest(22, "FEMALE",  "Jane Doe", 6000.0));
+        String jane = gson.toJson(new EmployeeRequest(22, "FEMALE", "Jane Doe", 6000.0));
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(jane));
     }
 
