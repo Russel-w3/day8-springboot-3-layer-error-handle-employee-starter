@@ -39,7 +39,11 @@ public class CompanyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
         }
         updatedCompany.setId(id);
-        return companyRepository.save(updatedCompany);
+        Company company = companyById.get();
+        if (updatedCompany.getName() != null) {
+            company.setName(updatedCompany.getName());
+        }
+        return companyRepository.save(company);
     }
 
     public Company getCompanyById(int id) {
