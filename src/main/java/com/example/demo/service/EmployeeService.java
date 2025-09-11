@@ -68,7 +68,7 @@ public class EmployeeService {
         return employeeMapper.toResponse(employeeRepository.save(employee));
     }
 
-    public Employee updateEmployee(int id, Employee updatedEmployee) {
+    public EmployeeResponse updateEmployee(int id, Employee updatedEmployee) {
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
@@ -93,7 +93,7 @@ public class EmployeeService {
         if (updatedEmployee.getStatus() != null) {
             employeeToUpdate.setStatus(updatedEmployee.getStatus());
         }
-        return employeeRepository.save(employeeToUpdate);
+        return employeeMapper.toResponse(employeeRepository.save(employeeToUpdate));
     }
 
     public void deleteEmployee(int id) {
