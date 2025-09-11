@@ -54,7 +54,7 @@ public class EmployeeService {
         return employeeMapper.toResponse(employee.get());
     }
 
-    public Employee createEmployee(Employee employee) {
+    public EmployeeResponse createEmployee(Employee employee) {
         if (employee.getAge() == null) {
             throw new InvalidAgeEmployeeException("employee age is null!");
         }
@@ -65,7 +65,7 @@ public class EmployeeService {
             throw new InvalidAgeAndSalaryEmployeeException("employee age greater than or equal 30 and salary less than 20000!");
         }
         employee.setStatus(true);
-        return employeeRepository.save(employee);
+        return employeeMapper.toResponse(employeeRepository.save(employee));
     }
 
     public Employee updateEmployee(int id, Employee updatedEmployee) {

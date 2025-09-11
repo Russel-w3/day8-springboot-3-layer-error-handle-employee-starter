@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.dto.EmployeeResponse;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.InvalidAgeAndSalaryEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
@@ -32,7 +33,7 @@ public class EmployeeServiceTest {
     void should_return_employee_when_create_an_employee() {
         Employee employee = new Employee(18, "MALE", null, "Tom", 6000.0);
         when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
-        Employee employeeResult = employeeService.createEmployee(employee);
+        EmployeeResponse employeeResult = employeeService.createEmployee(employee);
         assertEquals(employeeResult.getAge(), employee.getAge());
     }
 
@@ -54,7 +55,7 @@ public class EmployeeServiceTest {
     void should_set_status_to_true_by_default_when_create_an_employee() {
         Employee employee = new Employee(18, "MALE", null, "Tom", 18000.0);
         when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
-        Employee employeeResult = employeeService.createEmployee(employee);
+        EmployeeResponse employeeResult = employeeService.createEmployee(employee);
         assertEquals(true, employeeResult.getStatus());
     }
 
