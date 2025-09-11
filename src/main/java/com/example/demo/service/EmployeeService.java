@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.EmployeeResponse;
+import com.example.demo.dto.mapper.EmployeeMapper;
 import com.example.demo.entity.Employee;
 import com.example.demo.exception.InvalidAgeAndSalaryEmployeeException;
 import com.example.demo.exception.InvalidAgeEmployeeException;
@@ -19,34 +21,37 @@ public class EmployeeService {
 
     private final IEmployeeRepository employeeRepository;
 
-    public EmployeeService(IEmployeeRepository employeeRepository) {
+    private final EmployeeMapper employeeMapper;
+
+    public EmployeeService(IEmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
         this.employeeRepository = employeeRepository;
+        this.employeeMapper = employeeMapper;
     }
 
-    public List<Employee> getEmployees(String gender, Integer page, Integer size) {
+    public List<EmployeeResponse> getEmployees(String gender, Integer page, Integer size) {
         if (gender == null) {
             if (page == null || size == null) {
-                return employeeRepository.findAll();
+                return employeeMapper.toResponse(employeeRepository.findAll());
             } else {
                 Pageable pageable = PageRequest.of(page - 1, size);
-                return employeeRepository.findAll(pageable).stream().toList();
+                return employeeMapper.toResponse(employeeRepository.findAll(pageable).stream().toList());
             }
         } else {
             if (page == null || size == null) {
-                return employeeRepository.findEmployeesByGender(gender);
+                return employeeMapper.toResponse(employeeRepository.findEmployeesByGender(gender));
             } else {
                 Pageable pageable = PageRequest.of(page - 1, size);
-                return employeeRepository.findEmployeesByGender(gender, pageable);
+                return employeeMapper.toResponse(employeeRepository.findEmployeesByGender(gender, pageable));
             }
         }
     }
 
-    public Employee getEmployeeById(int id) {
+    public EmployeeResponse getEmployeeById(int id) {
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
         }
-        return employee.get();
+        return employeeMapper.toResponse(employee.get());
     }
 
     public Employee createEmployee(Employee employee) {
@@ -73,27 +78,30 @@ public class EmployeeService {
             throw new InvalidStatusEmployeeException("employee has left the company!");
         }
         updatedEmployee.setId(id);
-        if(updatedEmployee.getName() != null) {
+        if (updatedEmployee.getName() != null) {
             employeeToUpdate.setName(updatedEmployee.getName());
         }
-        if(updatedEmployee.getGender() != null) {
+        if (updatedEmployee.getGender() != null) {
             employeeToUpdate.setGender(updatedEmployee.getGender());
         }
-        if(updatedEmployee.getAge() != null) {
+        if (updatedEmployee.getAge() != null) {
             employeeToUpdate.setAge(updatedEmployee.getAge());
         }
-        if(updatedEmployee.getSalary() != null) {
+        if (updatedEmployee.getSalary() != null) {
             employeeToUpdate.setSalary(updatedEmployee.getSalary());
         }
-        if(updatedEmployee.getStatus() != null) {
+        if (updatedEmployee.getStatus() != null) {
             employeeToUpdate.setStatus(updatedEmployee.getStatus());
         }
         return employeeRepository.save(employeeToUpdate);
     }
 
     public void deleteEmployee(int id) {
-        Employee employee = getEmployeeById(id);
-        employee.setStatus(false);
-        employeeRepository.save(employee);
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
+        }
+        employee.get().setStatus(false);
+        employeeRepository.save(employee.get());
     }
 }

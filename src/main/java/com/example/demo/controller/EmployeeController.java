@@ -15,21 +15,18 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    private final EmployeeMapper employeeMapper;
-
-    public EmployeeController(EmployeeService employeeService,EmployeeMapper employeeMapper) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.employeeMapper = employeeMapper;
     }
 
     @GetMapping
     public List<EmployeeResponse> getEmployees(@RequestParam(required = false) String gender, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
-        return employeeMapper.toResponse(employeeService.getEmployees(gender, page, size));
+        return employeeService.getEmployees(gender, page, size);
     }
 
     @GetMapping("/{id}")
     public EmployeeResponse getEmployeeById(@PathVariable int id) {
-        return employeeMapper.toResponse(employeeService.getEmployeeById(id));
+        return employeeService.getEmployeeById(id);
     }
 
     @PostMapping
