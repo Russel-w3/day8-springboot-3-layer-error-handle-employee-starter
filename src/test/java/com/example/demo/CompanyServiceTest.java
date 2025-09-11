@@ -1,8 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.entity.Company;
-import com.example.demo.entity.Employee;
-import com.example.demo.repository.CompanyRepository;
+import com.example.demo.repository.ICompanyRepository;
 import com.example.demo.service.CompanyService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,12 +20,12 @@ public class CompanyServiceTest {
     private CompanyService companyService;
 
     @Mock
-    private CompanyRepository companyRepository;
+    private ICompanyRepository companyRepository;
 
     @Test
     void should_return_employee_when_create_an_employee() {
         Company company = new Company(null,"oracle");
-        when(companyRepository.createCompany(any())).thenReturn(company);
+        when(companyRepository.save(any())).thenReturn(company);
         Company companyResult = companyService.createCompany(company);
         assertEquals(company.getName(), companyResult.getName());
     }
