@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,7 +62,7 @@ public class EmployeeServiceTest {
         Employee employee = new Employee(18, "MALE", null, "Tom", 18000.0);
         employee.setStatus(null);
 
-       when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
+        when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
 
         employeeService.createEmployee(employee);
         assertEquals(true, employee.getStatus());
@@ -88,4 +89,18 @@ public class EmployeeServiceTest {
                 .save(argThat(e -> !e.getStatus()));
     }
 
+    @Test
+    void should_return_employees_by_age_desc_when_get_by_gender() {
+        Employee employee = new Employee(18, "MALE", null, "Tom", 18000.0);
+        Employee employee1 = new Employee(20, "MALE", null, "Tom", 18000.0);
+        employee.setStatus(true);
+        employee1.setStatus(true);
+
+        List<Employee> mockEmployees = List.of(employee1, employee);
+        when(employeeRepository.findEmployeesByGenderOrderByAgeDesc("MALE")).thenReturn(mockEmployees);
+        employeeService.getEmployees("MALE", null, null);
+
+        verify(employeeMapper).toResponse(mockEmployees);
+
+    }
 }

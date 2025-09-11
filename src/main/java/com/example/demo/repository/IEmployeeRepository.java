@@ -8,11 +8,6 @@ import java.util.List;
 
 public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
-
-    List<Employee> findEmployeesByGender(String gender);
-
-    List<Employee> findEmployeesByGender(String gender, Pageable pageable);
-
     List<Employee> findEmployeesByGenderOrderByAgeDesc(String gender);
 
     List<Employee> findEmployeesByGenderOrderByAgeDesc(String gender, Pageable pageable);
