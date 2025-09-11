@@ -50,14 +50,14 @@ public class CompanyService {
         return companyById.get();
     }
 
-//    public void deleteCompany(int id) {
-//        Company companyById = companyRepository.getCompanyById(id);
-//        if (companyById == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
-//        }
-//        companyRepository.deleteCompany(id);
-//    }
-//
+    public void deleteCompany(int id) {
+        Optional<Company> companyById = companyRepository.findById(id);
+        if (companyById.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
+        }
+        companyRepository.delete(companyById.get());
+    }
+
 //    public void deleteAll() {
 //        companyRepository.deleteAll();
 //    }
