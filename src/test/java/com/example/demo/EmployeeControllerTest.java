@@ -25,7 +25,7 @@ public class EmployeeControllerTest {
     private JdbcTemplate jdbcTemplate;
 
     @BeforeEach
-    void cleanEmployees() throws Exception {
+    void cleanEmployees() {
         jdbcTemplate.execute("DELETE FROM employee");
         jdbcTemplate.execute("ALTER TABLE employee AUTO_INCREMENT = 1;");
     }
