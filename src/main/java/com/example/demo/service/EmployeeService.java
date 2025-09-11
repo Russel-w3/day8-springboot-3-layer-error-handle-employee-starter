@@ -68,11 +68,27 @@ public class EmployeeService {
         if (employee.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found with id: " + id);
         }
-        if (!employee.get().getStatus()) {
+        Employee employeeToUpdate = employee.get();
+        if (!employeeToUpdate.getStatus()) {
             throw new InvalidStatusEmployeeException("employee has left the company!");
         }
         updatedEmployee.setId(id);
-        return employeeRepository.save(updatedEmployee);
+        if(updatedEmployee.getName() != null) {
+            employeeToUpdate.setName(updatedEmployee.getName());
+        }
+        if(updatedEmployee.getGender() != null) {
+            employeeToUpdate.setGender(updatedEmployee.getGender());
+        }
+        if(updatedEmployee.getAge() != null) {
+            employeeToUpdate.setAge(updatedEmployee.getAge());
+        }
+        if(updatedEmployee.getSalary() != null) {
+            employeeToUpdate.setSalary(updatedEmployee.getSalary());
+        }
+        if(updatedEmployee.getStatus() != null) {
+            employeeToUpdate.setStatus(updatedEmployee.getStatus());
+        }
+        return employeeRepository.save(employeeToUpdate);
     }
 
     public void deleteEmployee(int id) {
