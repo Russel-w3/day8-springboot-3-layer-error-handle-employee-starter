@@ -44,9 +44,4 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable int id) {
         employeeService.deleteEmployee(id);
     }
-
-    @DeleteMapping("/delete")
-    public void empty() {
-        employeeService.deleteAll();
-    }
 }

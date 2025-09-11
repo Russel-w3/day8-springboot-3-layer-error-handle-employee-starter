@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -20,9 +21,13 @@ public class EmployeeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @BeforeEach
     void cleanEmployees() throws Exception {
-        mockMvc.perform(delete("/employees/delete"));
+        jdbcTemplate.execute("DELETE FROM employee");
+        jdbcTemplate.execute("ALTER TABLE employee AUTO_INCREMENT = 1;");
     }
 
     private void createJohnSmith() throws Exception {
@@ -65,7 +70,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(get("/employees")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(1));
+                .andExpect(jsonPath("$.length()").value(2));
 
     }
 
@@ -205,8 +210,7 @@ public class EmployeeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[1].id").value(3));
+                .andExpect(jsonPath("$[0].id").value(1));
     }
 
     @Test

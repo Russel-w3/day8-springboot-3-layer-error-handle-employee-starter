@@ -1,12 +1,23 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer age;
     private String gender;
     private Double salary;
     private Boolean status;
+
+    public Employee() {
+
+    }
+
     public Integer getId() {
         return id;
     }
