@@ -42,14 +42,14 @@ public class CompanyService {
         return companyRepository.save(updatedCompany);
     }
 
-//    public Company getCompanyById(int id) {
-//        Company companyById = companyRepository.getCompanyById(id);
-//        if (companyById == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
-//        }
-//        return companyById;
-//    }
-//
+    public Company getCompanyById(int id) {
+        Optional<Company> companyById = companyRepository.findById(id);
+        if (companyById.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
+        }
+        return companyById.get();
+    }
+
 //    public void deleteCompany(int id) {
 //        Company companyById = companyRepository.getCompanyById(id);
 //        if (companyById == null) {
