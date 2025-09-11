@@ -58,7 +58,4 @@ public class CompanyService {
         companyRepository.delete(companyById.get());
     }
 
-//    public void deleteAll() {
-//        companyRepository.deleteAll();
-//    }
 }
