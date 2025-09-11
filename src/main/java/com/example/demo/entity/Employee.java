@@ -18,6 +18,9 @@ public class Employee {
 
     }
 
+    @Column(name = "company_id")
+    private Integer companyId;
+
     public Integer getId() {
         return id;
     }
@@ -64,5 +67,13 @@ public class Employee {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 }
